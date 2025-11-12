@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>22 da Laurinha</title>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: "Montserrat", sans-serif;
+    background: linear-gradient(135deg, #ffe347, #ff9a32, #ff7b00);
+    color: #fff;
+    text-align: center;
+  }
+
+  h1 {
+    margin-top: 40px;
+    font-size: 2.5rem;
+  }
+
+  .gallery {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-top: 40px;
+  }
+
+  .gallery img {
+    width: 220px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 20px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+    transition: transform 0.3s;
+  }
+
+  .gallery img:hover {
+    transform: scale(1.05);
+  }
+
+  .msg {
+    margin-top: 50px;
+    padding: 0 20px;
+    font-size: 1.3rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.7;
+  }
+
+  button {
+    margin-top: 40px;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 30px;
+    font-size: 18px;
+    cursor: pointer;
+    background: #fff;
+    color: #ff7b00;
+    font-weight: 600;
+    transition: 0.3s;
+  }
+
+  button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+  }
+
+.carousel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-top: 40px;
+}
+.carousel img {
+  width: 260px;
+  height: 360px;
+  object-fit: cover;
+  border-radius: 20px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+  transition: transform 0.3s;
+}
+.carousel img:hover {
+  transform: scale(1.05);
+}
+.carousel button {
+  background: rgba(255,255,255,0.3);
+  border: none;
+  color: #fff;
+  font-size: 2rem;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.carousel button:hover {
+  background: rgba(255,255,255,0.6);
+  transform: scale(1.15);
+}
+.falling span {
+  position: fixed;
+  top: -10vh;
+  font-size: 2rem;
+  opacity: 0.9;
+  animation: cair linear forwards;
+}
+
+@keyframes cair {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(110vh); }
+}
+
+@keyframes slideLeft {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(0); }
+}
+@keyframes slideRight {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(0); }
+  100% { transform: translateY(110vh); }
+}
+</style>
+</head>
+<body>
+<audio src="./images/parabéns-meu-amor.mp3" autoplay loop></audio>
+<div class="falling"></div>
+
+  <h1>Feliz Aniversário, Meu Amor ❤️</h1>
+
+  <div class="carousel">
+  <button class="prev">&#10094;</button>
+  <img id="carouselImage" src="./images/Carta.png" alt="Foto" />
+  <button class="next">&#10095;</button>
+</div>
+
+  <div class="msg" id="mensagem">
+    Muito bom celebrar sua vida, meu amor. Espero que seu dia tenha sido maravilhoso... Te espero aqui pra gente comemorar junto ❤️
+  </div>
+
+  <button onclick="mostrarMensagemExtra()"> Clique para mais ❤️ </button>
+
+<script>
+  const imagens = ["images/Carta.png", "images/bolo.jpeg", "images/papai.jpeg", "images/festa.jpeg", "images/combiel.jpeg", "images/familia.jpeg"]; // adicione mais se quis    er
+  let index = 0;
+  const imgElemento = document.getElementById("carouselImage");
+  const prevBtn = document.querySelector(".prev");
+  const nextBtn = document.querySelector(".next");
+
+  prevBtn.addEventListener("click", () => mudarImagem(-1));
+  nextBtn.addEventListener("click", () => mudarImagem(1));
+
+  function mudarImagem(direcao) {
+    index = (index + direcao + imagens.length) % imagens.length;
+    imgElemento.src = imagens[index];
+    imgElemento.style.animation = direcao > 0 ? "slideLeft 0.6s ease" : "slideRight 0.6s ease";
+    setTimeout(() => imgElemento.style.animation = "", 600);
+  }
+
+  setInterval(() => mudarImagem(1), 50000); // autoplay a cada 3 segundos
+
+  function mostrarMensagemExtra() {
+    const msg = document.getElementById('mensagem');
+    msg.innerHTML += '<br><br>Amei sua festa, principalmente a parte do com quem será ksksksksk 🤪💍❤️';
+  }
+
+  // Corações e emojis caindo
+  const fallingContainer = document.querySelector('.falling');
+  const itens = ["❤️","💛","🎂","🎉","🎈","🥳"];
+
+  function criarItem() {
+    const span = document.createElement('span');
+    span.innerText = itens[Math.floor(Math.random() * itens.length)];
+    span.style.left = Math.random() * 100 + 'vw';
+    span.style.animationDuration = 4 + Math.random() * 3 + 's';
+    fallingContainer.appendChild(span);
+    setTimeout(() => span.remove(), 7000);
+  }
+
+  setInterval(criarItem, 400);
+</script>
+
+</body>
+</html>
